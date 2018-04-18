@@ -17,6 +17,9 @@
 		0F7297D02086B76400F3D67A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0F7297CE2086B76400F3D67A /* LaunchScreen.storyboard */; };
 		0F7297DB2086B76400F3D67A /* WireLoopTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F7297DA2086B76400F3D67A /* WireLoopTests.swift */; };
 		0F7297E62086B76400F3D67A /* WireLoopUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F7297E52086B76400F3D67A /* WireLoopUITests.swift */; };
+		0F7297F52086B83E00F3D67A /* HitSound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0F7297F32086B83D00F3D67A /* HitSound.mp3 */; };
+		0F7297F62086B83E00F3D67A /* player.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 0F7297F42086B83E00F3D67A /* player.atlas */; };
+		0F7297F82086B98900F3D67A /* GameElements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F7297F72086B98900F3D67A /* GameElements.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +56,9 @@
 		0F7297E12086B76400F3D67A /* WireLoopUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WireLoopUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0F7297E52086B76400F3D67A /* WireLoopUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WireLoopUITests.swift; sourceTree = "<group>"; };
 		0F7297E72086B76400F3D67A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0F7297F32086B83D00F3D67A /* HitSound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = HitSound.mp3; sourceTree = "<group>"; };
+		0F7297F42086B83E00F3D67A /* player.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = player.atlas; sourceTree = "<group>"; };
+		0F7297F72086B98900F3D67A /* GameElements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameElements.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +109,8 @@
 		0F7297BE2086B76400F3D67A /* WireLoop */ = {
 			isa = PBXGroup;
 			children = (
+				0F7297F32086B83D00F3D67A /* HitSound.mp3 */,
+				0F7297F42086B83E00F3D67A /* player.atlas */,
 				0F7297BF2086B76400F3D67A /* AppDelegate.swift */,
 				0F7297C12086B76400F3D67A /* GameScene.sks */,
 				0F7297C32086B76400F3D67A /* Actions.sks */,
@@ -112,6 +120,7 @@
 				0F7297CC2086B76400F3D67A /* Assets.xcassets */,
 				0F7297CE2086B76400F3D67A /* LaunchScreen.storyboard */,
 				0F7297D12086B76400F3D67A /* Info.plist */,
+				0F7297F72086B98900F3D67A /* GameElements.swift */,
 			);
 			path = WireLoop;
 			sourceTree = "<group>";
@@ -243,7 +252,9 @@
 			files = (
 				0F7297CB2086B76400F3D67A /* Main.storyboard in Resources */,
 				0F7297C22086B76400F3D67A /* GameScene.sks in Resources */,
+				0F7297F52086B83E00F3D67A /* HitSound.mp3 in Resources */,
 				0F7297CD2086B76400F3D67A /* Assets.xcassets in Resources */,
+				0F7297F62086B83E00F3D67A /* player.atlas in Resources */,
 				0F7297D02086B76400F3D67A /* LaunchScreen.storyboard in Resources */,
 				0F7297C42086B76400F3D67A /* Actions.sks in Resources */,
 			);
@@ -270,6 +281,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0F7297F82086B98900F3D67A /* GameElements.swift in Sources */,
 				0F7297C62086B76400F3D67A /* GameScene.swift in Sources */,
 				0F7297C82086B76400F3D67A /* GameViewController.swift in Sources */,
 				0F7297C02086B76400F3D67A /* AppDelegate.swift in Sources */,
