@@ -60,6 +60,33 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             background.size = (self.view?.bounds.size)!
             self.addChild(background)
         }
+        
+    
+        //SET UP THE BIRD SPRITES FOR ANIMATION
+        probeSprites.append(probeAtlas.textureNamed("probe1"))
+        probeSprites.append(probeAtlas.textureNamed("probe2"))
+        probeSprites.append(probeAtlas.textureNamed("probe3"))
+        probeSprites.append(probeAtlas.textureNamed("probe4"))
+        
+        
+        self.probe = createProbe()
+        self.addChild(probe)
+        
+        //PREPARE TO ANIMATE THE PROBE AND REPEAT THE ANIMATION FOREVER
+        let animateProbe = SKAction.animate(with: self.probeSprites as! [SKTexture], timePerFrame: 0.1)
+        self.repeatActionBird = SKAction.repeatForever(animateProbe)
+        
+        // add all the sprite: label...
+        scoreLbl = createScoreLabel()
+        self.addChild(scoreLbl)
+        
+        highscoreLbl = createHighscoreLabel()
+        self.addChild(highscoreLbl)
+        
+        createLogo()
+        
+        taptoplayLbl = createTaptoplayLabel()
+        self.addChild(taptoplayLbl)
     }
     
     override func didMove(to view: SKView) {

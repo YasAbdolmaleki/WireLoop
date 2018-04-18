@@ -114,13 +114,13 @@
 				0F7297BF2086B76400F3D67A /* AppDelegate.swift */,
 				0F7297C12086B76400F3D67A /* GameScene.sks */,
 				0F7297C32086B76400F3D67A /* Actions.sks */,
+				0F7297F72086B98900F3D67A /* GameElements.swift */,
 				0F7297C52086B76400F3D67A /* GameScene.swift */,
 				0F7297C72086B76400F3D67A /* GameViewController.swift */,
 				0F7297C92086B76400F3D67A /* Main.storyboard */,
 				0F7297CC2086B76400F3D67A /* Assets.xcassets */,
 				0F7297CE2086B76400F3D67A /* LaunchScreen.storyboard */,
 				0F7297D12086B76400F3D67A /* Info.plist */,
-				0F7297F72086B98900F3D67A /* GameElements.swift */,
 			);
 			path = WireLoop;
 			sourceTree = "<group>";
