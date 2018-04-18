@@ -34,7 +34,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let probeAtlas = SKTextureAtlas(named:"player")
     var probeSprites = Array<Any>()
     var probe = SKSpriteNode()
-    var repeatActionBird = SKAction()
+    var repeatActionProbe = SKAction()
     
     func createScene(){
         self.physicsBody = SKPhysicsBody(edgeLoopFrom: self.frame)
@@ -74,7 +74,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         //PREPARE TO ANIMATE THE PROBE AND REPEAT THE ANIMATION FOREVER
         let animateProbe = SKAction.animate(with: self.probeSprites as! [SKTexture], timePerFrame: 0.1)
-        self.repeatActionBird = SKAction.repeatForever(animateProbe)
+        self.repeatActionProbe = SKAction.repeatForever(animateProbe)
         
         // add all the sprite: label...
         scoreLbl = createScoreLabel()
@@ -92,9 +92,110 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     override func didMove(to view: SKView) {
         createScene()
     }
+
+    func didBegin(_ contact: SKPhysicsContact) {
+        let firstBody = contact.bodyA
+        let secondBody = contact.bodyB
+        
+        if firstBody.categoryBitMask == CollisionBitMask.probeCategory && secondBody.categoryBitMask == CollisionBitMask.wireCategory || firstBody.categoryBitMask == CollisionBitMask.wireCategory && secondBody.categoryBitMask == CollisionBitMask.probeCategory || firstBody.categoryBitMask == CollisionBitMask.probeCategory && secondBody.categoryBitMask == CollisionBitMask.groundCategory || firstBody.categoryBitMask == CollisionBitMask.groundCategory && secondBody.categoryBitMask == CollisionBitMask.probeCategory{
+            enumerateChildNodes(withName: "wallPair", using: ({
+                (node, error) in
+                node.speed = 0
+                self.removeAllActions()
+            }))
+            if isDied == false {
+                isDied = true
+                createRestartBtn()
+                pauseBtn.removeFromParent()
+                self.probe.removeAllActions()
+            }
+        }
+    }
+    
+    func restartScene(){
+        self.removeAllChildren()
+        self.removeAllActions()
+        isDied = false
+        isGameStarted = false
+        score = 0
+        createScene()
+    }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-    
+        if isGameStarted == false {
+            //1
+            isGameStarted =  true
+            probe.physicsBody?.affectedByGravity = true
+            createPauseBtn()
+            //2
+            logoImg.run(SKAction.scale(to: 0.5, duration: 0.3), completion: {
+                self.logoImg.removeFromParent()
+            })
+            taptoplayLbl.removeFromParent()
+            //3
+            self.probe.run(repeatActionProbe)
+            
+            
+            // add pillars
+            //1
+            let spawn = SKAction.run({
+                () in
+                self.wallPair = self.createWalls()
+                self.addChild(self.wallPair)
+            })
+            //2
+            let delay = SKAction.wait(forDuration: 1.5)
+            let SpawnDelay = SKAction.sequence([spawn, delay])
+            let spawnDelayForever = SKAction.repeatForever(SpawnDelay)
+            self.run(spawnDelayForever)
+            //3
+            let distance = CGFloat(self.frame.width + wallPair.frame.width)
+            let movePillars = SKAction.moveBy(x: -distance - 50, y: 0, duration: TimeInterval(0.008 * distance))
+            let removePillars = SKAction.removeFromParent()
+            moveAndRemove = SKAction.sequence([movePillars, removePillars])
+            
+        
+            probe.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
+            probe.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 40))
+        } else {
+            //4
+            if isDied == false {
+                probe.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
+                probe.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 40))
+            }
+        }
+        
+        // pause/restart functions
+        for touch in touches{
+            let location = touch.location(in: self)
+            //1
+            if isDied == true {
+                if restartBtn.contains(location){
+                    if UserDefaults.standard.object(forKey: "highestScore") != nil {
+                        let hscore = UserDefaults.standard.integer(forKey: "highestScore")
+                        if hscore < Int(scoreLbl.text!)!{
+                            UserDefaults.standard.set(scoreLbl.text, forKey: "highestScore")
+                        }
+                    } else {
+                        UserDefaults.standard.set(0, forKey: "highestScore")
+                    }
+                    restartScene()
+                }
+            } else {
+                //2
+                if pauseBtn.contains(location){
+                    if self.isPaused == false{
+                        self.isPaused = true
+                        pauseBtn.texture = SKTexture(imageNamed: "play")
+                    } else {
+                        self.isPaused = false
+                        pauseBtn.texture = SKTexture(imageNamed: "pause")
+                    }
+                }
+            }
+        }
+        
+        
     }
 
     override func update(_ currentTime: TimeInterval) {

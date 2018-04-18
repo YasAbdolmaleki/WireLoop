@@ -19,7 +19,7 @@ struct CollisionBitMask {
 extension GameScene {
     func createProbe() -> SKSpriteNode {
         //1
-        let probe = SKSpriteNode(texture: SKTextureAtlas(named:"player").textureNamed("probe1"))
+        let probe = SKSpriteNode(texture: SKTextureAtlas(named:"player").textureNamed("probe1.png"))
         probe.size = CGSize(width: 50, height: 50)
         probe.position = CGPoint(x:self.frame.midX, y:self.frame.midY)
         //2
@@ -109,6 +109,60 @@ extension GameScene {
         taptoplayLbl.fontName = "HelveticaNeue"
         return taptoplayLbl
     }
+    
+    // trickyyyyyyyy
+    func createWalls() -> SKNode  {
+
+        // 2
+        wallPair = SKNode()
+        wallPair.name = "wallPair"
+        
+        let topWall = SKSpriteNode(imageNamed: "piller")
+        let btmWall = SKSpriteNode(imageNamed: "piller")
+        
+        topWall.position = CGPoint(x: self.frame.width + 25, y: self.frame.height / 2 + 420)
+        btmWall.position = CGPoint(x: self.frame.width + 25, y: self.frame.height / 2 - 420)
+        
+        topWall.setScale(0.5)
+        btmWall.setScale(0.5)
+        
+        topWall.physicsBody = SKPhysicsBody(rectangleOf: topWall.size)
+        topWall.physicsBody?.categoryBitMask = CollisionBitMask.wireCategory
+        topWall.physicsBody?.collisionBitMask = CollisionBitMask.probeCategory
+        topWall.physicsBody?.contactTestBitMask = CollisionBitMask.probeCategory
+        topWall.physicsBody?.isDynamic = false
+        topWall.physicsBody?.affectedByGravity = false
+        
+        btmWall.physicsBody = SKPhysicsBody(rectangleOf: btmWall.size)
+        btmWall.physicsBody?.categoryBitMask = CollisionBitMask.wireCategory
+        btmWall.physicsBody?.collisionBitMask = CollisionBitMask.probeCategory
+        btmWall.physicsBody?.contactTestBitMask = CollisionBitMask.probeCategory
+        btmWall.physicsBody?.isDynamic = false
+        btmWall.physicsBody?.affectedByGravity = false
+        
+        topWall.zRotation = CGFloat(Double.pi)
+        
+        wallPair.addChild(topWall)
+        wallPair.addChild(btmWall)
+        
+        wallPair.zPosition = 1
+        // 3
+        let randomPosition = random(min: -200, max: 200)
+        wallPair.position.y = wallPair.position.y +  randomPosition
+        
+        wallPair.run(moveAndRemove)
+        
+        return wallPair
+    }
+    
+    func random() -> CGFloat{
+        return CGFloat(Float(arc4random()) / 0xFFFFFFFF)
+    }
+    
+    func random(min : CGFloat, max : CGFloat) -> CGFloat{
+        return random() * (max - min) + min
+    }
+    
 }
 
 
